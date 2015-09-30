@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <script src="/app.js"></script>
+</head>
+<body>
+<div class="container" ng-controller="AppCtrl">
+    <form ng-submit="saveTags()">
+        <div class="form-group">
+            <input type="text" ng-model="asyncSelected"  typeahead="tag for tag in getTags($viewValue) | filter:$viewValue | limitTo:10" typeahead-on-select="addTag(asyncSelected)"
+                   typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control"  placeholder="Hashtag"/>
+        </div>
+        <i ng-show="loadingTags" class="glyphicon glyphicon-refresh"></i>
+        <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> No Results Found
+        </div>
+        <div class="form-group tagsinput">
+            <span class="tag label label-info" ng-repeat="tag in tags" track by $index>
+                {{tag}}
+                <span data-role="remove" ng-click="removeTag(tag)"></span>
+            </span>
+        </div>
+        <button type="submit" class="btn btn-primary pull-right">Save</button>
+    </form>
+</div>
+</body>
+</html>
