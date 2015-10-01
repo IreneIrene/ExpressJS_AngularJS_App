@@ -14,7 +14,7 @@ module.exports.TweetsService = function() {
             parameters: {
                 'q': opts.query,
                 'lang': 'en',
-                count: 30,
+                count: 50,
                 randomParam: Math.random() * 1000
             },
             headers: {Authorization: 'Bearer ' + opts.access_token}
@@ -45,9 +45,15 @@ module.exports.TweetsService = function() {
                     }
                 }
 
+                var reformatedTags = tags.map(function (tagName) {
+                    var rObj = {};
+                    rObj.name = tagName;
+                    return rObj;
+                });
+
             }
 
-            callback(tags);
+            callback(reformatedTags);
         })
     };
     return this;

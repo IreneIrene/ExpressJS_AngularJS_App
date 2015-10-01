@@ -1,18 +1,19 @@
-var app = angular.module('myApp', ['ui.bootstrap']);
+var app = angular.module('myApp', ['ngResource', 'ui.bootstrap']);
 
 
-app.controller('AppCtrl', function($scope, $http) {
+app.controller('AppCtrl', function($scope, $http, $resource) {
     $scope.tags = [];
 
     $scope.getTags = function(val) {
-        return $http.get('/tweets', {
-            params: {
-                q: '%23' + val,
-            }
-        }).then(function(res){
-            console.log(res.data);
-            return res.data;
-        });
+        var Tweets = $resource('/tweets', {q: '%23' + val});
+        return  Tweets.query()
+            .$promise.then(
+            function(res){
+                return res;
+            },
+            function(err){
+                console.log(err);
+            })
     };
 
     $scope.addTag = function(tag) {
@@ -26,7 +27,24 @@ app.controller('AppCtrl', function($scope, $http) {
     };
 
     $scope.saveTags = function() {
-        console.log('test');
+        var Hashtags = $resource('/hashtags', {}, {'saveData': {method:'POST'}});
+        Hashtags.saveData({}, $scope.tags)
+            .$promise.then(
+            function(res){
+                console.log(res);
+                $scope.success = true;
+            },
+            function(err){
+                console.log(err);
+                $scope.error = true;
+            });
+
+        $scope.tags = [];
     };
 
+    $scope.closeAlert = function() {
+        $scope.success = false;
+        $scope.error = false;
+        $scope.noResults = false;
+    };
 });

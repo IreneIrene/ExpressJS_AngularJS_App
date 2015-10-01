@@ -1,0 +1,10 @@
+{
+  "name": "myApp",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-resource": "~1.4.7",
+    "angular-bootstrap": "~0.13.4",
+    "bootstrap": "~3.3.5"
+  }
+}

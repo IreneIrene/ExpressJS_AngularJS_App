@@ -1,16 +1,21 @@
 var express = require('express');
+var path = require('path');
 var bodyParser = require('body-parser');
-var tweetsearch = require('./routes/tweetsearch');
+var router = require('./config/routes');
+
 var app = express();
 
+staticPath = path.normalize(__dirname + '/bower_components');
+app.use('/bower_components', express.static(staticPath));
 app.use(express.static(__dirname + '/public'));
-app.use('/tweets', tweetsearch);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('*', function(req, res) {
-    res.sendFile(__dirname + '/public/index.html');
-});
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use('/', router);
 
 var port = process.env.PORT || 8888;
 
