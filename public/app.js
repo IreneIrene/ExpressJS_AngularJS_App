@@ -1,7 +1,7 @@
 var app = angular.module('myApp', ['ngResource', 'ui.bootstrap']);
 
 
-app.controller('AppCtrl', function($scope, $http, $resource) {
+app.controller('AppCtrl', function($scope, $resource) {
     $scope.tags = [];
 
     $scope.getTags = function(val) {
