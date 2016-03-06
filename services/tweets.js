@@ -50,7 +50,6 @@ module.exports.TweetsService = function () {
           rObj.name = tagName;
           return rObj;
         });
-
       }
 
       cb(reformattedTags);

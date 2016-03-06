@@ -1,8 +1,7 @@
 var app = angular.module('myApp', ['ngResource', 'ui.bootstrap']);
 
-
 app.controller('AppCtrl', function ($scope, $http, $resource) {
-  $scope.tags = [];
+  $scope.hashtags = [];
 
   $scope.getHashtags = function (val) {
     var Tweets = $resource('/tweets', {q: '%23' + val});
@@ -17,18 +16,18 @@ app.controller('AppCtrl', function ($scope, $http, $resource) {
   };
 
   $scope.addHashtag = function (tag) {
-    $scope.tags.push(tag);
+    $scope.hashtags.push(tag);
     $scope.asyncSelected = '';//clear input
   };
 
   $scope.removeHashtag = function (tag) {
-    var index = $scope.tags.indexOf(tag);
-    $scope.tags.splice(index, 1);
+    var index = $scope.hashtags.indexOf(tag);
+    $scope.hashtags.splice(index, 1);
   };
 
   $scope.saveHashtags = function () {
     var Hashtags = $resource('/hashtags', {}, {'saveData': {method: 'POST'}});
-    Hashtags.saveData({}, $scope.tags)
+    Hashtags.saveData({}, $scope.hashtags)
       .$promise.then(
       function (res) {
         $scope.success = true;
@@ -37,7 +36,7 @@ app.controller('AppCtrl', function ($scope, $http, $resource) {
         $scope.error = true;
       });
 
-    $scope.tags = [];
+    $scope.hashtags = [];
   };
 
   $scope.closeAlert = function () {

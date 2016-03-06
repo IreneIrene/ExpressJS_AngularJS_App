@@ -11,7 +11,7 @@ html(ng-app='myApp')
           .form-group
             input.form-control(type='text',
             ng-model='asyncSelected',
-            typeahead='tag as tag.name for tag in getHashtags($viewValue) | limitTo:10',
+            typeahead='hashtag as hashtag.name for hashtag in getHashtags($viewValue) | limitTo:10',
             typeahead-on-select='addHashtag(asyncSelected)',
             typeahead-loading='loadingTags',
             typeahead-no-results='noResults',
@@ -24,8 +24,8 @@ html(ng-app='myApp')
           dismiss-on-timeout='5000')
             | No Results Found
           .form-group.tagsinput
-            span.tag.label.label-info(ng-repeat='tag in tags track by $index', ng-cloak)
-              | {{tag.name}}
+            span.tag.label.label-info(ng-repeat='hashtag in hashtags track by $index', ng-cloak)
+              | {{hashtag.name}}
               span(data-role='remove', ng-click='removeHashtag(tag)')
           alert(type='danger',
           close='closeAlert()',
